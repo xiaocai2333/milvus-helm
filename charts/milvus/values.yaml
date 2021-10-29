@@ -4,8 +4,8 @@ cluster:
 
 image:
   all:
-    repository: milvusdb/milvus
-    tag: v2.0.0-rc7-20211011-d567b21
+    repository: harbor.zilliz.cc/milvus/milvus
+    tag: zc-4
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -149,7 +149,7 @@ standalone:
 
 proxy:
   enabled: true
-  replicas: 1
+  replicas: 2
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -205,12 +205,9 @@ queryCoordinator:
     labels: {}
     clusterIP: ""
 
-  autoHandoff: true  # Enable auto handoff
-  autoBalance: off   # Disable auto balance
-
 queryNode:
   enabled: true
-  replicas: 1
+  replicas: 2
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -253,7 +250,7 @@ indexCoordinator:
 
 indexNode:
   enabled: true
-  replicas: 1
+  replicas: 2
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -296,7 +293,7 @@ dataCoordinator:
 
 dataNode:
   enabled: true
-  replicas: 1
+  replicas: 2
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -327,6 +324,13 @@ dataNode:
 ##
 
 minio:
+  nodeSelector:
+    node-role.kubernetes.io/benchmark: benchmark
+  tolerations:
+    - key: qa
+      operator: Exists
+      effect: NoSchedule
+
   enabled: true
   name: minio
   mode: distributed
@@ -365,6 +369,15 @@ etcd:
   image:
     tag: "3.5.0-debian-10-r24"
     pullPolicy: IfNotPresent
+  nodeSelector:
+    node-role.kubernetes.io/benchmark: benchmark
+  tolerations:
+    - key: qa
+      operator: Exists
+      effect: NoSchedule
+  global:
+    storageClass: local-path
+
 
   service:
     type: ClusterIP
@@ -432,6 +445,12 @@ pulsar:
       tag: 2.7.3
 
   zookeeper:
+    nodeSelector:
+      node-role.kubernetes.io/benchmark: benchmark
+    tolerations:
+      - key: qa
+        operator: Exists
+        effect: NoSchedule
     resources:
       requests:
         memory: 512Mi
@@ -440,6 +459,12 @@ pulsar:
       PULSAR_MEM: "\"-Xms512m -Xmx512m -Dcom.sun.management.jmxremote -Djute.maxbuffer=10485760 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:+DisableExplicitGC -XX:+PerfDisableSharedMem -Dzookeeper.forceSync=no\""
 
   bookkeeper:
+    nodeSelector:
+      node-role.kubernetes.io/benchmark: benchmark
+    tolerations:
+      - key: qa
+        operator: Exists
+        effect: NoSchedule
     replicaCount: 2
     volumes:
       journal:
@@ -457,6 +482,12 @@ pulsar:
       nettyMaxFrameSizeBytes: "104867840"
 
   broker:
+    nodeSelector:
+      node-role.kubernetes.io/benchmark: benchmark
+    tolerations:
+      - key: qa
+        operator: Exists
+        effect: NoSchedule
     component: broker
     replicaCount: 1
     resources:
@@ -470,12 +501,24 @@ pulsar:
       defaultRetentionSizeInMB: "-1"
 
   autoRecovery:
+    nodeSelector:
+      node-role.kubernetes.io/benchmark: benchmark
+    tolerations:
+      - key: qa
+        operator: Exists
+        effect: NoSchedule
     resources:
       requests:
         memory: 512Mi
         cpu: 1
 
   function:
+    nodeSelector:
+      node-role.kubernetes.io/benchmark: benchmark
+    tolerations:
+      - key: qa
+        operator: Exists
+        effect: NoSchedule
     replicaCount: 1
     resources:
       requests:
@@ -484,7 +527,21 @@ pulsar:
     configData:
       BOOKIE_MEM: "\"-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m -Dio.netty.leakDetectionLevel=disabled -Dio.netty.recycler.linkCapacity=1024 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:ParallelGCThreads=32 -XX:ConcGCThreads=32 -XX:G1NewSizePercent=50 -XX:+DisableExplicitGC -XX:-ResizePLAB -XX:+ExitOnOutOfMemoryError -XX:+PerfDisableSharedMem\""
 
+  bastion:
+    nodeSelector:
+      node-role.kubernetes.io/benchmark: benchmark
+    tolerations:
+      - key: qa
+        operator: Exists
+        effect: NoSchedule
+
   proxy:
+    nodeSelector:
+      node-role.kubernetes.io/benchmark: benchmark
+    tolerations:
+      - key: qa
+        operator: Exists
+        effect: NoSchedule
     replicaCount: 1
     resources:
       requests:
