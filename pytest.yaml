@@ -25,5 +25,5 @@ spec:
             memory: "8Gi"
             cpu: "4.0"
           requests:
-            memory: "4Gi"
-            cpu: "2.0"
+            memory: "8Gi"
+            cpu: "4.0"

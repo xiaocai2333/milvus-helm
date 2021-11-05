@@ -5,7 +5,7 @@ cluster:
 image:
   all:
     repository: harbor.zilliz.cc/milvus/milvus
-    tag: zc-6
+    tag: zc-9
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -213,6 +213,9 @@ queryNode:
   affinity: {}
   tolerations: []
   extraEnv: []
+
+  # Minimum time before the newly inserted data can be searched (in ms)
+  gracefulTime: 0   # ms
 
   # Enable autoscaling using HorizontalPodAutoscaler
   autoscaling:
