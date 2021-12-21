@@ -4,8 +4,8 @@ cluster:
 
 image:
   all:
-    repository: harbor.zilliz.cc/milvus/milvus
-    tag: zc-9
+    repository: harbor.zilliz.cc/milvus-dev/milvus
+    tag: zc-rc8
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -149,7 +149,7 @@ standalone:
 
 proxy:
   enabled: true
-  replicas: 2
+  replicas: 1
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -207,7 +207,7 @@ queryCoordinator:
 
 queryNode:
   enabled: true
-  replicas: 2
+  replicas: 1
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -253,7 +253,7 @@ indexCoordinator:
 
 indexNode:
   enabled: true
-  replicas: 2
+  replicas: 1
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -296,7 +296,7 @@ dataCoordinator:
 
 dataNode:
   enabled: true
-  replicas: 2
+  replicas: 1
   resources: {}
   nodeSelector: {}
   affinity: {}

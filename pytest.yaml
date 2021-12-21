@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: milvus-client
-        image: registry.zilliz.com/milvus/milvus-test-env:v0.5
+        image: registry.milvus.io/milvus/milvus-test-env:v0.5
         command:
         - cat
         tty: true
