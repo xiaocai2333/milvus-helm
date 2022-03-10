@@ -189,6 +189,14 @@ proxy:
   maxShardNum: 256  # Maximum number of shards in a collection
   maxTaskNum: 1024  # max task number of proxy task queue
 
+  resources:
+    limits:
+      cpu: "8"
+      memory: 16Gi
+    requests:
+      cpu: "5"
+      memory: 9Gi
+
 rootCoordinator:
   enabled: true
   replicas: 1  # Run Root Coordinator mode with replication disabled
@@ -245,6 +253,13 @@ queryNode:
   gracefulTime: 0   # ms
   segcore:
     chunkRows: 32768  # The number of vectors in a chunk.
+  resources:
+    limits:
+      cpu: "32"
+      memory: 64Gi
+    requests:
+      cpu: "5"
+      memory: 33Gi
 
 indexCoordinator:
   enabled: true
@@ -265,7 +280,7 @@ indexCoordinator:
 
 indexNode:
   enabled: true
-  replicas: 1
+  replicas: 5
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -273,6 +288,13 @@ indexNode:
   extraEnv:
   - name: GODEBUG
     value: "madvdontneed=1"
+  resources:
+    limits:
+      cpu: "32"
+      memory: 64Gi
+    requests:
+      cpu: "5"
+      memory: 33Gi
 
 dataCoordinator:
   enabled: true
@@ -306,6 +328,7 @@ dataCoordinator:
     annotations: {}
     labels: {}
     clusterIP: ""
+      memory: 9Gi
 
 dataNode:
   enabled: true
@@ -320,6 +343,14 @@ dataNode:
 
   flush:
     insertBufSize: "16777216"  ## bytes, 16MB
+  
+  resources:
+    limits:
+      cpu: "8"
+      memory: 16Gi
+    requests:
+      cpu: "5"
+      memory: 9Gi
 
 knowhere:
   # Default value: auto
