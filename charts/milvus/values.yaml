@@ -4,8 +4,8 @@ cluster:
 
 image:
   all:
-    repository: milvusdb/milvus
-    tag: v2.0.1
+    repository: xiaocai2333/milvus
+    tag: test-768-100M
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -240,7 +240,7 @@ queryCoordinator:
 
 queryNode:
   enabled: true
-  replicas: 1
+  replicas: 2
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -328,11 +328,10 @@ dataCoordinator:
     annotations: {}
     labels: {}
     clusterIP: ""
-      memory: 9Gi
 
 dataNode:
   enabled: true
-  replicas: 1
+  replicas: 2
   resources: {}
   nodeSelector: {}
   affinity: {}

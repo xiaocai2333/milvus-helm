@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: milvus-client-deployment-zc
+  labels:
+    app: milvus-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: milvus-client
+  template:
+    metadata:
+      labels:
+        app: milvus-client
+    spec:
+      volumes:
+        - name: zc-pv-storage
+          persistentVolumeClaim:
+            claimName: fileserver-claim
+      containers:
+      - name: milvus-client
+        image: xiaocai2333/milvus-test-env:v0.5
+        command:
+        - cat
+        tty: true
+        volumeMounts:
+        - mountPath: "/data"
+          name: zc-pv-storage
+        resources:
+          limits:
+            memory: "32Gi"
+            cpu: "8.0"

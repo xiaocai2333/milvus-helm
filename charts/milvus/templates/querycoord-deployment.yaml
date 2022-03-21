@@ -38,7 +38,7 @@ spec:
       - name: querycoord
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "milvus", "run", "querycoord" ]
+        args: [ "milvus", "run", "querycoord", ">", "/tmp/querycoord.log", "2>&1" ]
         env:
         - name: CACHE_SIZE
           valueFrom:
